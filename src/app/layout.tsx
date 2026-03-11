@@ -1,16 +1,21 @@
-import { Outfit, Geist } from 'next/font/google';
+import { Outfit, Geist, Poppins } from 'next/font/google';
 import './globals.css';
 import "flatpickr/dist/flatpickr.css";
 import { SidebarProvider } from '@/context/SidebarContext';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { cn } from "@/lib/utils";
+// src/app/layout.tsx or wherever Flatpickr is used
+import 'flatpickr/dist/flatpickr.css';
+import { Toaster } from 'sonner';
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
-const outfit = Outfit({
+
+const poppins = Poppins({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-poppins",
 });
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,9 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className={`${outfit.className} dark:bg-gray-900`}>
+      <body className={`${poppins.className} dark:bg-gray-900`}>
         <ThemeProvider>
           <SidebarProvider>{children}</SidebarProvider>
+          <Toaster />
+
         </ThemeProvider>
       </body>
     </html>

@@ -18,25 +18,70 @@ import {
   UserCircleIcon,
 } from "../icons/index";
 import SidebarWidget from "./SidebarWidget";
+import { MessageCircleIcon, PersonStandingIcon, Ticket } from "lucide-react";
 
 type NavItem = {
   name: string;
   icon: React.ReactNode;
   path?: string;
-  subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
+  subItems?: { name: string; path: string; pro?: boolean; new?: boolean, icon: React.ReactNode }[];
 };
 
 const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
-    subItems: [{ name: "Overview", path: "/", pro: false }, { name: "Analytics", path: "/analytics", pro: false }, { name: "Marketing", path: "/marketing", pro: false },],
+    subItems: [
+      {
+        name: "Overview", path: "/", pro: false, icon: <GridIcon />,
+      },
+      {
+        name: "Analytics", path: "/analytics", pro: false, icon: <GridIcon />,
+      },
+      {
+        name: "Marketing", path: "/marketing", pro: false, icon: <GridIcon />,
+      },
+    ],
   },
   {
     icon: <UserCircleIcon />,
-    name: "Bookings",
-    path: "/bookings",
+    name: "Clients",
+    path: "/clients",
+    subItems: [
+      {
+        name: "Bookings", path: "/bookings", pro: false, icon: <Ticket />,
+      },
+      {
+        name: "Travellers", path: "/travellers", pro: false, icon: <PersonStandingIcon />,
+      },
+      {
+        name: "Enquires", path: "/enquires", pro: false, icon: <MessageCircleIcon />,
+      },
+
+
+    ],
   },
+  {
+    icon: <UserCircleIcon />,
+    name: "Trips",
+    path: "/trips",
+  },
+  {
+    icon: <UserCircleIcon />,
+    name: "Support",
+    subItems: [
+
+      {
+        name: "Mail", path: "/mail", pro: false, icon: <GridIcon />,
+      },
+      {
+        name: "Chat", path: "/chat", pro: false, icon: <GridIcon />,
+      },
+
+    ],
+  },
+
+
   {
     icon: <CalenderIcon />,
     name: "Calendar",
@@ -51,19 +96,27 @@ const navItems: NavItem[] = [
   {
     name: "Forms",
     icon: <ListIcon />,
-    subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
+    subItems: [{
+      name: "Form Elements", path: "/form-elements", pro: false, icon: <GridIcon />,
+    }],
   },
   {
     name: "Tables",
     icon: <TableIcon />,
-    subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
+    subItems: [{
+      name: "Basic Tables", path: "/basic-tables", pro: false, icon: <GridIcon />,
+    }],
   },
   {
     name: "Pages",
     icon: <PageIcon />,
     subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
+      {
+        name: "Blank Page", path: "/blank", pro: false, icon: <GridIcon />,
+      },
+      {
+        name: "404 Error", path: "/error-404", pro: false, icon: <GridIcon />,
+      },
     ],
   },
 ];
@@ -186,6 +239,7 @@ const AppSidebar: React.FC = () => {
                         : "menu-dropdown-item-inactive"
                         }`}
                     >
+                      {subItem.icon}
                       {subItem.name}
                       <span className="flex items-center gap-1 ml-auto">
                         {subItem.new && (
@@ -288,9 +342,9 @@ const AppSidebar: React.FC = () => {
     <aside
       className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200 
         ${isExpanded || isMobileOpen
-          ? "w-[290px]"
+          ? "w-[260px]"
           : isHovered
-            ? "w-[290px]"
+            ? "w-[260px]"
             : "w-[90px]"
         }
         ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}

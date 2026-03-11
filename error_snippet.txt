@@ -1,0 +1,10 @@
+CssSyntaxError: 
+tailwindcss: 
+D:\Portfolio Projects\RF-
+Travels\free-nextjs-admin
+-dashboard-main\free-next
+js-admin-dashboard-main\s
+rc\app\globals.css:1:1: 
+Cannot apply unknown 
+utility class ``
+    at Input.error (node_
