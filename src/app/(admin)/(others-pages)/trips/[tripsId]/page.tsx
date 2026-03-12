@@ -14,6 +14,7 @@ import TravellerDetail from './components/TravellerDetail/TravellerDetail';
 import { Traveller } from '../../travellers/columns';
 import { TripTraveller } from './components/TravellerDetail/columns';
 import TripGuide from './components/TripGuide/TripGuide';
+import TripItenery from './components/TripItenery';
 
 const TripsDetails = ({ params }: { params: Promise<{ tripsId: string }> }) => {
     const [tableData, setTableData] = React.useState<Trips[]>([
@@ -136,7 +137,11 @@ const TripsDetails = ({ params }: { params: Promise<{ tripsId: string }> }) => {
             country: "Sri Lanka",
             paid: true,
             airline: 'Sri Lankan',
-            class: "Economy"
+            class: "Economy",
+            amount: 375000,
+            visa: "as",
+            ticket: "qq",
+            travellerId: "1"
         },
         {
             id: "1",
@@ -147,7 +152,12 @@ const TripsDetails = ({ params }: { params: Promise<{ tripsId: string }> }) => {
             country: "Sri Lanka",
             paid: false,
             airline: 'Sri Lankan',
-            class: "Economy"
+            class: "Economy",
+            amount: 375000,
+            visa: "as",
+            ticket: "qq",
+            travellerId: "1"
+
         },
         {
             id: "1",
@@ -158,7 +168,12 @@ const TripsDetails = ({ params }: { params: Promise<{ tripsId: string }> }) => {
             country: "Sri Lanka",
             paid: true,
             airline: 'Air arabia',
-            class: "Economy"
+            class: "Economy",
+            amount: 375000,
+            visa: "as",
+            ticket: "qq",
+            travellerId: "1"
+
         },
         {
             id: "1",
@@ -169,7 +184,12 @@ const TripsDetails = ({ params }: { params: Promise<{ tripsId: string }> }) => {
             country: "Sri Lanka",
             paid: false,
             airline: 'Saudia',
-            class: "Economy"
+            class: "Economy",
+            amount: 375000,
+            visa: "as",
+            ticket: "qq",
+            travellerId: "1"
+
         },
         {
             id: "1",
@@ -180,7 +200,12 @@ const TripsDetails = ({ params }: { params: Promise<{ tripsId: string }> }) => {
             country: "Sri Lanka",
             paid: true,
             airline: 'Sri Lankan',
-            class: "Business"
+            class: "Business",
+            amount: 375000,
+            visa: "as",
+            ticket: "qq",
+            travellerId: "1"
+
         },
         {
             id: "1",
@@ -191,7 +216,12 @@ const TripsDetails = ({ params }: { params: Promise<{ tripsId: string }> }) => {
             country: "Sri Lanka",
             paid: true,
             airline: 'Kuwait Airways',
-            class: "Business"
+            class: "Business",
+            amount: 375000,
+            visa: "as",
+            ticket: "qq",
+            travellerId: "1"
+
         }
     ];
     return (
@@ -211,6 +241,10 @@ const TripsDetails = ({ params }: { params: Promise<{ tripsId: string }> }) => {
                 </div>
                 <div className="col-span-12 space-y-6 xl:col-span-7">
 
+                    <TripItenery />
+                </div>
+                <div className="col-span-12 space-y-6 xl:col-span-7">
+
                     <TripGuide />
                 </div>
 
@@ -221,7 +255,6 @@ const TripsDetails = ({ params }: { params: Promise<{ tripsId: string }> }) => {
                 <div className="col-span-12">
                     <StatisticsChart />
                 </div>
-
 
             </div>
         </div>

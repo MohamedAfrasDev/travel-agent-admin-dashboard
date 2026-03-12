@@ -33,6 +33,7 @@ import { Field, FieldLabel } from "@/components/ui/field"
 import { UploadIcon } from "lucide-react";
 import Image from "next/image";
 import ExcelIcon from "../../../../../../../../public/images/icons/sheets.png";
+import { ButtonGroup } from "@/components/ui/button-group";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -121,8 +122,9 @@ export function DataTable<TData, TValue>({
                     {table.getPaginationRowModel().rows?.length ? (
                         table.getPaginationRowModel().rows.map((row) => (
                             <React.Fragment key={row.id}>
-                                <TableRow onClick={() => {
-                                    // router.push(`/bookings/${row.original.id}`);
+                                <TableRow onClick={(e) => {
+                                    e.stopPropagation();
+                                    row.toggleExpanded()
                                 }}>
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell
@@ -139,7 +141,7 @@ export function DataTable<TData, TValue>({
                                 </TableRow>
                                 <AnimatePresence initial={false}>
                                     {row.getIsExpanded() && (
-                                        <TableRow className="cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
+                                        <TableRow className="cursor-pointer transition-colors "
                                         >
                                             <TableCell colSpan={columns.length} className="p-0">
                                                 <motion.div
@@ -149,96 +151,156 @@ export function DataTable<TData, TValue>({
                                                     transition={{ duration: 0.20 }}
                                                     className="overflow-hidden"
                                                 >
-                                                    <div className="gap-5 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] sm:p-6 grid grid-cols-2">          <DropdownMenu>
-                                                        <DropdownMenuTrigger>
-                                                            <Field>
-                                                                <FieldLabel htmlFor="travller-type">Traveller Type</FieldLabel>
+                                                    <div className="gap-5 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] ">
+                                                        <div className="sm:p-6 grid grid-cols-2 gap-5">
+                                                            <DropdownMenu>
+                                                                <DropdownMenuTrigger>
+                                                                    <Field>
+                                                                        <FieldLabel htmlFor="travller-type">Traveller Type</FieldLabel>
 
+                                                                        <Input
+                                                                            type="name"
+                                                                            placeholder="Traveller Type"
+                                                                            value={row.original.type}
+                                                                            disabled
+                                                                        />
+                                                                    </Field>
+                                                                </DropdownMenuTrigger>
+                                                                <DropdownMenuContent>
+                                                                    <DropdownMenuGroup>
+                                                                        <DropdownMenuLabel>Change Traveller Type</DropdownMenuLabel>
+                                                                        <DropdownMenuItem onClick={(e) => {
+                                                                            e.stopPropagation();
+                                                                            table.options.meta?.updateType?.(row.original.id, "Adult");
+                                                                        }}>Adult</DropdownMenuItem>
+                                                                        <DropdownMenuItem onClick={(e) => {
+                                                                            e.stopPropagation();
+                                                                            table.options.meta?.updateType?.(row.original.id, "Child")
+                                                                        }}>Child</DropdownMenuItem>
+                                                                        <DropdownMenuItem onClick={(e) => {
+                                                                            e.stopPropagation();
+
+                                                                            table.options.meta?.updateType?.(row.original.id, "Infant")
+                                                                        }}>Infant</DropdownMenuItem>
+
+                                                                    </DropdownMenuGroup>
+                                                                </DropdownMenuContent>
+                                                            </DropdownMenu>
+                                                            <Field>
+                                                                <FieldLabel htmlFor="full-name">Full Name</FieldLabel>
                                                                 <Input
-                                                                    type="name"
-                                                                    placeholder="Traveller Type"
-                                                                    value={row.original.type}
+                                                                    id="full-name"
+                                                                    type="text"
+                                                                    value={row.original.name}
+                                                                    placeholder="Full Name"
                                                                     disabled
                                                                 />
+
                                                             </Field>
-                                                        </DropdownMenuTrigger>
-                                                        <DropdownMenuContent>
-                                                            <DropdownMenuGroup>
-                                                                <DropdownMenuLabel>Change Traveller Type</DropdownMenuLabel>
-                                                                <DropdownMenuItem onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    table.options.meta?.updateType?.(row.original.id, "Adult");
-                                                                }}>Adult</DropdownMenuItem>
-                                                                <DropdownMenuItem onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    table.options.meta?.updateType?.(row.original.id, "Child")
-                                                                }}>Child</DropdownMenuItem>
-                                                                <DropdownMenuItem onClick={(e) => {
-                                                                    e.stopPropagation();
+                                                            <Field>
+                                                                <FieldLabel htmlFor="traveller-email">Email</FieldLabel>
+                                                                <Input
+                                                                    id="traveller-email"
+                                                                    type="text"
+                                                                    value={row.original.email}
+                                                                    placeholder="Email"
+                                                                    disabled
+                                                                />
 
-                                                                    table.options.meta?.updateType?.(row.original.id, "Infant")
-                                                                }}>Infant</DropdownMenuItem>
+                                                            </Field>
+                                                            <Field>
+                                                                <FieldLabel htmlFor="traveller-phone">Phone</FieldLabel>
+                                                                <Input
+                                                                    id="traveller-phone"
+                                                                    type="text"
+                                                                    value={row.original.phone}
+                                                                    placeholder="Email"
+                                                                    disabled
+                                                                />
 
-                                                            </DropdownMenuGroup>
-                                                        </DropdownMenuContent>
-                                                    </DropdownMenu>
-                                                        <Field>
-                                                            <FieldLabel htmlFor="full-name">Full Name</FieldLabel>
-                                                            <Input
-                                                                id="full-name"
-                                                                type="text"
-                                                                value={row.original.name}
-                                                                placeholder="Full Name"
-                                                                disabled
-                                                            />
+                                                            </Field>
 
-                                                        </Field>
-                                                        <Field>
-                                                            <FieldLabel htmlFor="traveller-email">Email</FieldLabel>
-                                                            <Input
-                                                                id="traveller-email"
-                                                                type="text"
-                                                                value={row.original.email}
-                                                                placeholder="Email"
-                                                                disabled
-                                                            />
+                                                            <Field>
+                                                                <FieldLabel htmlFor="traveller-address">Address</FieldLabel>
+                                                                <Input
+                                                                    id="traveller-address"
+                                                                    type="text"
+                                                                    value={row.original.address}
+                                                                    placeholder="Address"
+                                                                    disabled
+                                                                />
 
-                                                        </Field>
-                                                        <Field>
-                                                            <FieldLabel htmlFor="traveller-phone">Phone</FieldLabel>
-                                                            <Input
-                                                                id="traveller-phone"
-                                                                type="text"
-                                                                value={row.original.phone}
-                                                                placeholder="Email"
-                                                                disabled
-                                                            />
+                                                            </Field>
+                                                            <Field>
+                                                                <FieldLabel htmlFor="traveller-country">Country</FieldLabel>
+                                                                <Input
+                                                                    id="traveller-country"
+                                                                    type="text"
+                                                                    value={row.original.country}
+                                                                    placeholder="Country"
+                                                                    disabled
+                                                                />
 
-                                                        </Field>
+                                                            </Field>
+                                                            <Field>
+                                                                <FieldLabel htmlFor="traveller-airline">Airline</FieldLabel>
+                                                                <Input
+                                                                    id="traveller-airline"
+                                                                    type="text"
+                                                                    value={row.original.airline}
+                                                                    placeholder="Airline"
+                                                                    disabled
+                                                                />
 
-                                                        <Field>
-                                                            <FieldLabel htmlFor="traveller-address">Address</FieldLabel>
-                                                            <Input
-                                                                id="traveller-address"
-                                                                type="text"
-                                                                value={row.original.address}
-                                                                placeholder="Address"
-                                                                disabled
-                                                            />
+                                                            </Field>
+                                                            <Field>
+                                                                <FieldLabel htmlFor="traveller-amount">Amount</FieldLabel>
+                                                                <ButtonGroup>
+                                                                    <Button variant="outline" className="h-10">LKR</Button>
+                                                                    <Input
+                                                                        id="traveller-amount"
+                                                                        type="text"
+                                                                        value={row.original.amount}
+                                                                        placeholder="Amount"
+                                                                        disabled
+                                                                    />
+                                                                </ButtonGroup>
 
-                                                        </Field>
-                                                        <Field>
-                                                            <FieldLabel htmlFor="traveller-country">Country</FieldLabel>
-                                                            <Input
-                                                                id="traveller-country"
-                                                                type="text"
-                                                                value={row.original.country}
-                                                                placeholder="Country"
-                                                                disabled
-                                                            />
+                                                            </Field>
 
-                                                        </Field>
+                                                        </div>
+                                                        <div className="grid grid-cols-3 p-5">
+                                                            <Field>
+                                                                <FieldLabel htmlFor="traveller-id-card">ID Card</FieldLabel>
+                                                                <ButtonGroup>
+                                                                    <Button variant="outline" className="h-10">Download ID Card</Button>
+                                                                    <Button variant="default" onClick={() => {
+                                                                        router.push(`/trips/${row.original.id}/${row.original.travellerId}`);
+                                                                    }} className="h-10">View ID Card</Button>
 
+                                                                </ButtonGroup>
+
+                                                            </Field>
+                                                            <Field>
+                                                                <FieldLabel htmlFor="traveller-ticket">Ticket</FieldLabel>
+                                                                <ButtonGroup>
+                                                                    <Button variant="outline" className="h-10">Download Ticket</Button>
+                                                                    <Button variant="default" className="h-10">View Ticket</Button>
+
+                                                                </ButtonGroup>
+
+                                                            </Field>
+                                                            <Field>
+                                                                <FieldLabel htmlFor="traveller-ticket">Visa</FieldLabel>
+                                                                <ButtonGroup>
+                                                                    <Button variant="outline" className="h-10">Download Visa</Button>
+                                                                    <Button variant="default" className="h-10">View Visa</Button>
+
+                                                                </ButtonGroup>
+
+                                                            </Field>
+
+                                                        </div>
                                                     </div>
                                                 </motion.div>
                                             </TableCell>

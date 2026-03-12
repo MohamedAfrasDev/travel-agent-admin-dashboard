@@ -17,6 +17,10 @@ export type TripTraveller = {
     paid: boolean
     airline: string
     class: "Economy" | "Business" | "First Class"
+    amount: number
+    visa: string
+    ticket: string
+    travellerId: string
 }
 
 // Extend the TableMeta interface to support our update function

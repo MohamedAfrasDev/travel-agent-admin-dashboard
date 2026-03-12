@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/table"
 import React from "react"
 import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -63,15 +64,23 @@ export function DataTable<TData, TValue>({
     return (
         <div className="rounded-xl border border-gray-200 bg-white dark:border-white/5 dark:bg-white/3">
 
-            <div className="flex items-center py-4">
+            <div className="flex items-center py-4 flex-row justify-between px-5">
                 <Input
                     placeholder="Filter name..."
                     value={(table.getColumn("bookedTrip")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
                         table.getColumn("bookedTrip")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-md ml-5"
+                    className="max-w-md"
                 />
+
+                <Button
+                    onClick={() => router.push("/trips/create-new-trip")}
+                    className="ml-5 h-10"
+                    variant="outline"
+                >
+                    Create Trip
+                </Button>
 
             </div>
 

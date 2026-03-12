@@ -5,6 +5,7 @@ import { DataTable } from './data-table'
 import { columns, Payment } from './columns'
 import { Plus } from 'lucide-react';
 import { AddPaymentDialog } from './AddPaymentDialog';
+import { Card } from '@/components/ui/card';
 
 const PaymentDetail = () => {
 
@@ -39,12 +40,13 @@ const PaymentDetail = () => {
 
     ]);
     return (
-        <ComponentCard title='Payments' icons={
-            <AddPaymentDialog paymentId={tableData.length + 1} />
-        }>
+        <Card className='dark:bg-white/3'>
+            <div className='flex justify-between px-5 pt-2'>
+                <h2 className='text-lg font-semibold'>Payments</h2>
+                <AddPaymentDialog paymentId={tableData.length + 1} />
+            </div>
             <DataTable columns={columns} data={tableData} />
-
-        </ComponentCard>
+        </Card>
     )
 }
 

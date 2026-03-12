@@ -113,32 +113,27 @@ export const columns: ColumnDef<Booking>[] = [
             const status = row.getValue("status") as Booking["status"];
             return (
                 <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button
-                            variant="outline"
-                            onClick={(e) => e.stopPropagation()}
-
-                            className="ml-auto"
-                            style={{
-                                background: status === "Booked"
-                                    ? "green-20"
+                    <DropdownMenuTrigger onClick={(e) => e.stopPropagation()}
+                        className="ml-auto"
+                        style={{
+                            background: status === "Booked"
+                                ? "green-20"
+                                : status === "Pending"
+                                    ? "orange/60"
+                                    : status === "Paid"
+                                        ? "blue/60"
+                                        : "red/60",
+                            color:
+                                status === "Booked"
+                                    ? "green"
                                     : status === "Pending"
-                                        ? "orange/60"
+                                        ? "orange"
                                         : status === "Paid"
-                                            ? "blue/60"
-                                            : "red/60",
-                                color:
-                                    status === "Booked"
-                                        ? "green"
-                                        : status === "Pending"
-                                            ? "orange"
-                                            : status === "Paid"
-                                                ? "blue"
-                                                : "red",
-                            }}
-                        >
-                            {status}
-                        </Button>
+                                            ? "blue"
+                                            : "red",
+                        }}
+                    >
+                        {status}
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                         <DropdownMenuGroup>
