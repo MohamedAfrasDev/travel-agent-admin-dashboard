@@ -196,8 +196,6 @@
 
   body {
     @apply relative font-normal font-outfit z-1 bg-background text-foreground;
-
-
   }
 
   * {
@@ -1194,9 +1192,9 @@ span.flatpickr-weekday,
 */
 
 .dark {
-  --background: #1A1C23;
+  --background: #2b2727;
   /* Change dark mode BG color here */
-  --foreground: #1A1C23;
+  --foreground: #f5f5f5;
   --aa: #006eff45;
   /* Optional: change text color */
   --card: #2b2727;

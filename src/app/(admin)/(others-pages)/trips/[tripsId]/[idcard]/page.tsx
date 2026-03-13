@@ -2,6 +2,10 @@
 
 import { useRef } from "react"
 import { toPng } from 'html-to-image'
+import { Instagram, Twitter, Facebook } from 'lucide-react'
+
+import Logo from "../../../../../../../public/images/logo/rf-logo.png"
+import Image from "next/image"
 
 const IdCard = ({ params }: { params: { idCard: string, tripsId?: string } }) => {
     // Handling generic id properties directly. 
@@ -9,10 +13,8 @@ const IdCard = ({ params }: { params: { idCard: string, tripsId?: string } }) =>
     const cardRef = useRef<HTMLDivElement>(null)
 
     // Using placeholder details similar to the image
-    const name = "MARY BROWN"
-    const role = "MANAGER"
-    const phone = "+00-0000-0000-00"
-    const email = "contact@email.com"
+    const name = "JANE AUSTEN"
+    const role = "TRAVEL AGENT"
 
     const downloadCard = async () => {
         if (!cardRef.current) return
@@ -39,221 +41,178 @@ const IdCard = ({ params }: { params: { idCard: string, tripsId?: string } }) =>
     }
 
     return (
-        <div className="flex flex-col xl:flex-row gap-8 min-h-screen p-6 lg:p-12 items-start justify-center">
+        <div className="flex flex-col xl:flex-row gap-8 min-h-screen p-6 lg:p-12 items-start justify-center bg-gray-50 dark:bg-gray-900">
 
             {/* LEFT SIDE: ID Cards Wrapper for Download */}
             <div className="flex-1 w-full flex justify-center pb-4 max-w-full overflow-x-auto">
-                {/* 
-                  The wrapper has a slightly darker transparent background just inside the capture
-                  so the shapes pop perfectly 
-                */}
+                {/* A light purple background matching the presentation in the reference */}
                 <div
                     ref={cardRef}
-                    className="flex flex-col md:flex-row gap-8 p-8 shrink-0 relative"
-                    style={{ backgroundColor: '#457989' }}
+                    className="flex flex-col md:flex-row gap-8 p-8 shrink-0 relative bg-[#AAB4EE]"
                 >
                     {/* --- FRONT CARD --- */}
-                    <div className="relative w-[260px] h-[420px] bg-white rounded-md overflow-hidden shadow-[0_15px_40px_-10px_rgba(0,0,0,0.3)] flex flex-col items-center">
+                    <div className="relative w-[260px] h-[420px] bg-white rounded-sm overflow-hidden shadow-2xl flex flex-col items-center shrink-0">
 
-                        {/* Wavy Background Elements */}
-                        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 340 540" preserveAspectRatio="none">
-                            {/* Top Left Shape */}
-                            <path d="M 0 0 L 260 0 C 260 50, 200 130, 0 80 Z" fill="#D3EBEA" />
-                            {/* Top Right Shape */}
-                            <path d="M 340 0 L 290 0 C 350 40, 310 160, 340 220 Z" fill="#D3EBEA" />
+                        {/* Abstract Background SVG (Front) */}
+                        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 260 420" preserveAspectRatio="none">
+                            {/* Top Left Green Leaf SVG */}
+                            <path d="M 0 0 L 50 0 C 60 70, 30 120, 0 160 Z" fill="#7FCDA5" />
+                            <path d="M 0 0 L 80 0 L 60 40 Z" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
+                            <path d="M 80 0 L 25 100" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
 
-                            {/* Bottom Wave Shape */}
-                            <path d="M 0 420 C 130 380, 200 480, 340 450 L 340 540 L 0 540 Z" fill="#D3EBEA" />
-                            {/* Left Bottom corner Wave */}
-                            <path d="M 0 350 C 40 400, 100 500, 0 520 Z" fill="#D3EBEA" />
+                            {/* Top Right Cloud SVG */}
+                            <path d="M 260 55 C 220 50, 200 80, 200 110 C 200 130, 260 110, 260 110 Z" fill="#EAEBFA" />
+                            <path d="M 260 65 C 230 45, 185 60, 205 110 C 210 125, 260 110, 260 110" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
 
-                            {/* Simple Clouds (Top) */}
-                            <g fill="#D3EBEA" transform="translate(60, 80)">
-                                <circle cx="15" cy="15" r="15" />
-                                <circle cx="35" cy="10" r="10" />
-                                <rect x="15" y="15" width="20" height="15" rx="5" />
-                            </g>
-                            <g fill="#D3EBEA" transform="translate(180, 280)">
-                                <circle cx="15" cy="15" r="15" />
-                                <circle cx="35" cy="10" r="10" />
-                                <rect x="15" y="15" width="20" height="15" rx="5" />
-                            </g>
-                            <g fill="#white" opacity="0.8" transform="translate(230, 480)">
-                                <circle cx="15" cy="15" r="15" />
-                                <circle cx="35" cy="10" r="10" />
-                                <rect x="15" y="15" width="20" height="15" rx="5" />
-                            </g>
+                            <circle cx="210" cy="35" r="5" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
+
+                            {/* Left Middle Shape */}
+                            <circle cx="25" cy="245" r="5" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
+
+                            {/* Right Middle Plus */}
+                            <path d="M 235 145 L 245 145 M 240 140 L 240 150" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
                         </svg>
 
                         {/* Front Content */}
-                        <div className="relative z-10 flex flex-col items-center w-full h-full pt-10 pb-4 px-6">
+                        <div className="relative z-10 flex flex-col items-center w-full h-full pt-8 pb-4">
 
                             {/* Logo */}
-                            <div className="text-[#325A6B] font-extrabold text-2xl tracking-widest mb-6">
-                                LOGO
+                            <div className="w-22 mb-1 flex justify-center">
+                                <Image src={Logo} alt="Travel Agency Logo" width={100} height={100} className="w-full h-auto object-contain" />
                             </div>
 
-                            {/* Avatar */}
-                            <div className="relative p-[5px] rounded-full bg-[#1F2B30] mb-8">
-                                <div className="relative w-[190px] h-[190px] rounded-full overflow-hidden bg-gray-100 flex items-center justify-center shrink-0">
+                            {/* Avatar Section */}
+                            <div className="relative mb-6 flex justify-center items-center w-full mt-2">
+                                {/* Yellow Circular Background */}
+                                <div className="absolute w-[100px] h-[100px] bg-[#F1C84D] rounded-full"></div>
+                                {/* User Portrait Container */}
+                                <div className="relative w-[100px] h-[100px] rounded-full overflow-hidden flex items-end justify-center z-10 mt-5 shadow-sm border border-transparent">
                                     <img
-                                        src={`https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&size=256&bold=true`}
+                                        src={`https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=transparent&color=333&size=256&bold=true`}
                                         alt="Profile"
-                                        className="w-full h-full object-cover"
+                                        className="w-[110%] h-[110%] object-cover object-center"
                                         crossOrigin="anonymous"
                                     />
                                 </div>
                             </div>
 
                             {/* Name & Role */}
-                            <h1 className="mt-2 text-[28px] font-black text-[#436C7C] font-serif uppercase tracking-widest text-center leading-tight">
-                                {name.split(' ')[0]} <br /> {name.split(' ')[1] || ''}
+                            <h1 className="text-[24px] font-[900] text-[#6B3C9B] uppercase tracking-wide leading-[1.1] text-center mt-2 px-4 w-full">
+                                {name.split(' ')[0]} {name.split(' ')[1]}
                             </h1>
-                            <div className="text-[#325A6B] font-bold text-[15px] tracking-[0.2em] mt-3 mb-6 uppercase">
+                            <div className="text-[#2D2D2D] text-[13px] tracking-wide mt-2 pb-[10px] w-[70%] text-center font-medium border-b border-[#2D2D2D]">
                                 {role}
                             </div>
 
                             {/* Details Info */}
-                            <div className="flex flex-col gap-2 w-full text-[#325A6B] text-[13px] font-bold mb-auto items-center">
-                                <div className="mb-2 text-sm flex gap-2 tracking-widest opacity-80">
-                                    <span>ID</span>
-                                    <span>{idCard}</span>
+                            <div className="flex flex-col items-center mt-6 w-full">
+                                <div className="text-[14px] text-[#2D2D2D] font-medium tracking-wide">
+                                    ID: {idCard}
                                 </div>
-
-                                <div className="flex items-center gap-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-[#325A6B]"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                    <span>{phone}</span>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#325A6B]"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                                    <span>{email}</span>
+                                <div className="text-[9px] text-[#2D2D2D] font-semibold uppercase tracking-wider mt-5 opacity-80">
+                                    Expired Date: 7/04/2030
                                 </div>
                             </div>
 
-                            {/* Footer */}
-                            <div className="text-[11px] text-[#325A6B] font-bold opacity-60 tracking-wider">
-                                Valid until 2026
-                            </div>
                         </div>
                     </div>
 
                     {/* --- BACK CARD --- */}
-                    <div className="relative w-[260px] h-[420px] bg-white rounded-md overflow-hidden shadow-[0_15px_40px_-10px_rgba(0,0,0,0.3)] flex flex-col items-center">
+                    <div className="relative w-[260px] h-[420px] bg-white rounded-sm overflow-hidden shadow-2xl flex flex-col items-center shrink-0">
 
-                        {/* Wavy Background Elements & Plane */}
-                        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 340 540" preserveAspectRatio="none">
-                            {/* Clouds on back top */}
-                            <g fill="#D3EBEA" transform="translate(60, 40) scale(1.2)">
-                                <circle cx="15" cy="15" r="15" />
-                                <circle cx="35" cy="10" r="10" />
-                                <rect x="15" y="15" width="20" height="15" rx="5" />
-                            </g>
-                            <g fill="#D3EBEA" transform="translate(240, 70) scale(0.8)">
-                                <circle cx="15" cy="15" r="15" />
-                                <circle cx="35" cy="10" r="10" />
-                                <rect x="15" y="15" width="20" height="15" rx="5" />
-                            </g>
-                            <g fill="#D3EBEA" transform="translate(40, 310) scale(0.9)">
-                                <circle cx="15" cy="15" r="15" />
-                                <circle cx="35" cy="10" r="10" />
-                                <rect x="15" y="15" width="20" height="15" rx="5" />
-                            </g>
-                            <g fill="#D3EBEA" transform="translate(250, 310) scale(0.9)">
-                                <circle cx="15" cy="15" r="15" />
-                                <circle cx="35" cy="10" r="10" />
-                                <rect x="15" y="15" width="20" height="15" rx="5" />
-                            </g>
+                        {/* Abstract Background SVG (Back) */}
+                        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 260 420" preserveAspectRatio="none">
+                            {/* Top Left Elements */}
+                            <path d="M 0 85 C 30 85, 30 35, 15 0" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
+                            <circle cx="180" cy="15" r="5" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
+                            <path d="M 45 65 L 55 65 M 50 60 L 50 70" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
 
-                            {/* Earth / Large bottom hills background */}
-                            <path d="M 0 450 C 40 300, 200 180, 450 450 L 340 540 L 0 540 Z" fill="#D3EBEA" />
-                            <path d="M -50 480 C 150 400, 250 430, 380 540 L -50 540 Z" fill="#A4D7CF" />
+                            {/* Top Right Leaf SVG */}
+                            <path d="M 210 0 L 260 0 L 260 60 C 240 60, 220 30, 210 0 Z" fill="#7FCDA5" />
+                            <path d="M 220 0 L 260 0 L 260 120 C 240 100, 220 80, 230 0 Z" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
+                            <path d="M 260 40 L 245 75 Z" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
 
-                            {/* Airplane Illustration (Center Bottom) */}
-                            {/* We use basic SVG primitive shapes to approximate the front-facing jet from the image */}
-                            <g transform="translate(170, 420) scale(1)">
-                                {/* Wings base */}
-                                <path d="M -130 5 L -20 10 L 20 10 L 130 5 C 130 5, 140 10, 130 15 L -130 15 Z" fill="#2E5564" />
-                                {/* Engine left */}
-                                <ellipse cx="-60" cy="22" rx="10" ry="14" fill="#2E5564" />
-                                {/* Engine right */}
-                                <ellipse cx="60" cy="22" rx="10" ry="14" fill="#2E5564" />
-                                {/* Jet Body */}
-                                <ellipse cx="0" cy="5" rx="30" ry="40" fill="#FFFFFF" />
-                                {/* Nose cone */}
-                                <path d="M -20 -15 C 0 -40, 20 -15, 0 -35 Z" fill="#FFFFFF" />
-                                <path d="M -3 30 L 3 30 L 0 -50 Z" fill="#FFFFFF" />
-                                {/* Windshield */}
-                                <path d="M -22 -12 Q 0 -22 22 -12 Q 0 -5 -22 -12 Z" fill="#2E5564" />
-                                {/* Tail Fin */}
-                                <path d="M -4 -30 L -10 -65 L 10 -65 L 4 -30 Z" fill="#2E5564" />
-                            </g>
+                            {/* Bottom Left Elements */}
+                            <path d="M 0 330 C 40 370, 60 400, 30 420" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
 
-                            {/* Overlapping lower clouds */}
-                            <g transform="translate(90, 460) scale(1.1)">
-                                {/* Cloud filling to block the plane's lower section */}
-                                <circle cx="15" cy="15" r="15" fill="#FFFFFF" />
-                                <circle cx="35" cy="10" r="10" fill="#FFFFFF" />
-                                <circle cx="-5" cy="20" r="10" fill="#FFFFFF" />
-                                <rect x="-5" y="15" width="45" height="15" rx="5" fill="#FFFFFF" />
-                            </g>
-                            <g transform="translate(20, 440) scale(0.9)">
-                                <circle cx="15" cy="15" r="15" fill="#FFFFFF" />
-                                <circle cx="35" cy="10" r="10" fill="#FFFFFF" />
-                                <rect x="15" y="15" width="20" height="15" rx="5" fill="#FFFFFF" />
-                            </g>
+                            {/* Bottom Right Elements */}
+                            <circle cx="230" cy="375" r="3" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
+                            <path d="M 235 345 L 245 345 M 240 340 L 240 350" fill="none" stroke="#2D2D2D" strokeWidth="1.5" />
                         </svg>
 
                         {/* Back Content */}
-                        <div className="relative z-10 w-full h-full pt-16 px-8 flex flex-col items-center">
-                            <h2 className="text-[#325A6B] text-xl font-bold tracking-widest font-serif uppercase mb-10">
-                                TERM & CONDITION
+                        <div className="relative z-10 w-full h-full pt-10 px-8 flex flex-col items-center">
+
+                            {/* Logo */}
+                            <div className="w-14 mb-[2.2rem] flex justify-center mt-2">
+                                <Image src={Logo} alt="Travel Agency Logo" width={60} height={60} className="w-full h-auto object-contain" />
+                            </div>
+
+                            <h2 className="text-[#2D2D2D] text-[13px] font-[500] tracking-wide mb-[1.7rem]">
+                                TERMS AND CONDITIONS
                             </h2>
 
-                            <div className="text-[#325A6B] text-center text-[10.5px] leading-[1.8] flex flex-col gap-6 font-bold px-2 opacity-90">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <div className="w-full flex flex-col gap-[1.35rem] px-2 mb-auto">
+                                {[1, 2, 3].map((item) => (
+                                    <div key={item} className="flex items-start gap-[0.85rem]">
+                                        <div className="mt-1 flex-shrink-0 w-2.5 h-2.5 rounded-full border-[2px] border-[#2D2D2D]"></div>
+                                        <p className="text-[#2D2D2D] text-[10.5px] leading-[1.3] font-medium opacity-90 tracking-tight">
+                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat.
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Footer / Socials */}
+                            <div className="mb-8 mt-4 flex flex-col items-center gap-2">
+                                <div className="flex gap-2.5">
+                                    <div className="w-[20px] h-[20px] bg-[#F1C84D] rounded-full flex items-center justify-center text-[#2D2D2D]">
+                                        <Instagram size={11} strokeWidth={2.5} />
+                                    </div>
+                                    <div className="w-[20px] h-[20px] bg-[#F1C84D] rounded-full flex items-center justify-center text-[#2D2D2D]">
+                                        <Twitter size={11} strokeWidth={2.5} fill="currentColor" stroke="none" />
+                                    </div>
+                                    <div className="w-[20px] h-[20px] bg-[#F1C84D] rounded-full flex items-center justify-center text-[#2D2D2D]">
+                                        <Facebook size={11} fill="currentColor" stroke="none" />
+                                    </div>
+                                </div>
+                                <p className="text-[8px] font-bold text-[#2D2D2D] tracking-[0.15em] mt-1">@TRAVELAGENCY</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
 
             {/* RIGHT SIDE: Details and Actions */}
-            <div className="w-full xl:w-[300px] shrink-0 bg-white rounded-xl shadow-xl p-8 flex flex-col gap-6 sticky top-12">
-                <h2 className="text-2xl font-black text-[#224859] border-b border-gray-100 pb-4">
-                    Download ID Component
+            <div className="w-full xl:w-[320px] shrink-0 bg-white rounded-xl shadow-sm border border-gray-100 p-8 flex flex-col gap-6 sticky top-12">
+                <h2 className="text-xl font-bold text-gray-900 border-b border-gray-100 pb-4">
+                    Digital ID Card
                 </h2>
 
                 <div className="flex flex-col gap-1">
-                    <span className="text-sm text-gray-500 font-bold uppercase tracking-wider">Traveller Name</span>
-                    <span className="text-lg font-bold text-gray-800">{name}</span>
+                    <span className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Traveller Name</span>
+                    <span className="text-base font-semibold text-gray-800">{name}</span>
                 </div>
 
                 <div className="flex flex-col gap-1">
-                    <span className="text-sm text-gray-500 font-bold uppercase tracking-wider">Traveller ID</span>
-                    <div className="font-mono bg-[#EDF3F5] p-3 rounded-md text-[#224859] font-bold text-sm tracking-wider border border-gray-100">
+                    <span className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Traveller ID</span>
+                    <div className="font-mono bg-gray-50 px-3 py-2 rounded-md text-gray-800 font-semibold text-sm tracking-widest border border-gray-100">
                         {idCard}
                     </div>
                 </div>
 
                 <div className="flex flex-col gap-1">
-                    <span className="text-sm text-gray-500 font-bold uppercase tracking-wider">Trip ID</span>
-                    <div className="font-mono bg-[#EDF3F5] p-3 rounded-md text-[#224859] font-bold text-sm tracking-wider border border-gray-100">
-                        {params.tripsId || 'Unknown Trip'}
+                    <span className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Trip ID</span>
+                    <div className="font-mono bg-gray-50 px-3 py-2 rounded-md text-gray-800 font-semibold text-sm tracking-widest border border-gray-100">
+                        {params.tripsId || 'Unknown'}
                     </div>
                 </div>
 
-                <p className="text-xs font-semibold text-gray-400 mt-2">
-                    Clicking download will capture both the front and the back of the ID card simultaneously exactly as they appear in the viewer.
-                </p>
-
                 <button
                     onClick={downloadCard}
-                    className="mt-2 w-full bg-[#183944] hover:bg-[#112932] text-white py-4 rounded-lg font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98] active:shadow-sm"
+                    className="mt-4 w-full bg-[#183944] hover:bg-[#112932] text-white py-3.5 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98]"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="7 10 12 15 17 10"></polyline>
                         <line x1="12" x2="12" y1="15" y2="3"></line>
@@ -261,7 +220,6 @@ const IdCard = ({ params }: { params: { idCard: string, tripsId?: string } }) =>
                     Download Digital ID
                 </button>
             </div>
-
         </div>
     )
 }

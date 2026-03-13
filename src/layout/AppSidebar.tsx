@@ -64,7 +64,16 @@ const navItems: NavItem[] = [
   {
     icon: <UserCircleIcon />,
     name: "Trips",
-    path: "/trips",
+    subItems: [
+
+      {
+        name: "Trips", path: "/trips", pro: false, icon: <GridIcon />,
+      },
+      {
+        name: "Airlines", path: "/airlines", pro: false, icon: <GridIcon />,
+      },
+
+    ],
   },
   {
     icon: <UserCircleIcon />,

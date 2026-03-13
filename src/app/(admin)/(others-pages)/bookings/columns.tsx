@@ -21,6 +21,9 @@ export type Booking = {
     date: number
     travellers: string[]
     price: number
+    passport: string
+    photo: string
+    note: string
 }
 
 // Extend the TableMeta interface to support our update function

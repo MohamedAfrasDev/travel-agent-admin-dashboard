@@ -61,7 +61,7 @@ export function DataTable<TData, TValue>({
     })
 
     return (
-        <div className="rounded-xl border border-gray-200 bg-white dark:border-white/5 dark:bg-white/3">
+        <div className="rounded-xl border border-gray-200 bg-white dark:border-white/5 dark:bg-gray-dark ">
 
             <div className="flex items-center py-4 justify-between px-5">
                 <Input
@@ -73,7 +73,7 @@ export function DataTable<TData, TValue>({
                     className="max-w-md"
                 />
 
-                <a href="/bookings/create-booking" className="">Create Booking</a>
+                <a href="/airlines/create-airline" className="">Create Airline</a>
             </div>
 
             {/* SCROLL CONTAINER */}
@@ -86,7 +86,7 @@ export function DataTable<TData, TValue>({
                                 {headerGroup.headers.map((header) => (
                                     <TableHead
                                         key={header.id}
-                                        className="sticky top-0 z-20 bg-white dark:bg-transparent px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                        className="sticky top-0 z-20 bg-white dark:bg-gray-dark px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                                     >
                                         {header.isPlaceholder
                                             ? null
@@ -104,7 +104,6 @@ export function DataTable<TData, TValue>({
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow key={row.id} onClick={() => {
-                                    router.push(`/bookings/${row.original.id}`);
                                 }}>
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell

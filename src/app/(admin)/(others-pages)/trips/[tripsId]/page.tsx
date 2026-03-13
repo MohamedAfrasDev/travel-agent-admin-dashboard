@@ -8,7 +8,7 @@ import BreadcrumbComp from './components/BreadcrumbComp';
 import TripEstimatedRevenue from './components/TripEstimatedRevenue';
 import { TripMetrics } from './components/TripMetrics';
 import { columns, Trips } from '../columns';
-import React from 'react';
+import React, { use } from 'react';
 import { TravellerDataTable } from './components/traveller-data-table';
 import TravellerDetail from './components/TravellerDetail/TravellerDetail';
 import { Traveller } from '../../travellers/columns';
@@ -16,7 +16,9 @@ import { TripTraveller } from './components/TravellerDetail/columns';
 import TripGuide from './components/TripGuide/TripGuide';
 import TripItenery from './components/TripItenery';
 
-const TripsDetails = ({ params }: { params: Promise<{ tripsId: string }> }) => {
+const TripsDetails = ({ params }: { params: { tripsId: string } }) => {
+    const { tripsId } = use(params);
+
     const [tableData, setTableData] = React.useState<Trips[]>([
         {
             id: '1',
@@ -224,6 +226,7 @@ const TripsDetails = ({ params }: { params: Promise<{ tripsId: string }> }) => {
 
         }
     ];
+
     return (
         <div>
 
@@ -231,7 +234,7 @@ const TripsDetails = ({ params }: { params: Promise<{ tripsId: string }> }) => {
             <div className="grid grid-cols-2 gap-4 md:gap-6">
 
                 <div className="col-span-12 flex lg:flex-row md:flex-col flex-col gap-5">
-                    <TripDetails />
+                    <TripDetails tripsId={tripsId} />
                     <TripsMetrics />
                 </div>
                 <div className="col-span-12">
@@ -241,7 +244,7 @@ const TripsDetails = ({ params }: { params: Promise<{ tripsId: string }> }) => {
                 </div>
                 <div className="col-span-12 space-y-6 xl:col-span-7">
 
-                    <TripItenery />
+                    <TripItenery tripsId={tripsId} />
                 </div>
                 <div className="col-span-12 space-y-6 xl:col-span-7">
 

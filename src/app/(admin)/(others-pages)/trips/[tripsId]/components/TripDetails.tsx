@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import Image from 'next/image'
-import React from 'react'
+import React, { use } from 'react'
 
-const TripDetails = () => {
+const TripDetails = ({ tripsId }: { tripsId: string }) => {
+
     return (
         <Card className='dark:bg-white/3 px-5 py-3'>
             <h2 className='text-lg font-semibold'>Trip Detail</h2>

@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["royalalfathimatravels.com"],
+    domains: ["royalalfathimatravels.com", "upload.wikimedia.org", "dashboard.royalalfathimatravels.com"],
   },
   webpack(config) {
     config.module.rules.push({

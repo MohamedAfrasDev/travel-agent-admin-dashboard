@@ -20,7 +20,11 @@ const Bookings = () => {
             status: "Booked",
             date: Date.now(),
             travellers: ["1", "2"],
-            price: 1000
+            price: 1000,
+            passport: 'No',
+            photo: "No",
+            note: "No",
+
 
         },
         {
@@ -35,7 +39,10 @@ const Bookings = () => {
             status: "Booked",
             date: Date.now(),
             travellers: ["3", "4"],
-            price: 2000
+            price: 2000,
+            passport: 'No',
+            photo: "No",
+            note: "No",
 
         },
 
