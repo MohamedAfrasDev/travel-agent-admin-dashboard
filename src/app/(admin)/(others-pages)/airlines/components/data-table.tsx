@@ -29,12 +29,14 @@ interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
     updateStatus?: (id: number, status: string) => void
+    onDelete: (id: string) => void
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
     updateStatus,
+    onDelete,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -48,6 +50,7 @@ export function DataTable<TData, TValue>({
         getCoreRowModel: getCoreRowModel(),
         meta: {
             updateStatus: updateStatus as any,
+            onDelete, // Pass it here
         },
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
@@ -82,7 +85,7 @@ export function DataTable<TData, TValue>({
                 <Table>
                     <TableHeader className="border-b border-gray-100 dark:border-gray-800">
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id} >
+                            <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => (
                                     <TableHead
                                         key={header.id}

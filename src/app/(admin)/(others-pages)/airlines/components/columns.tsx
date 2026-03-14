@@ -7,6 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react"
 import Image from "next/image";
+import AirlineRowDropDown from "./AirlineRowDropDown";
 
 export type Airline = {
     id: string
@@ -106,6 +107,14 @@ export const columns: ColumnDef<Airline>[] = [
         cell: ({ row }) => {
             const dateVal = row.getValue("date") as number;
             return <span className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{new Date(dateVal).toLocaleDateString()}</span>;
+        }
+    },
+    {
+        accessorKey: "more",
+        header: "",
+        cell: ({ row, table }) => {
+            const dateVal = row.getValue("date") as number;
+            return <AirlineRowDropDown airlineData={row.original} onDelete={table.options.meta?.onDelete} />
         }
     },
 ]

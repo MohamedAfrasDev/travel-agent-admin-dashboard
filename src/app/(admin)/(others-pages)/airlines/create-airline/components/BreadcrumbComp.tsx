@@ -17,11 +17,11 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-export default function BreadcrumbComp({ tripTitle, pageTitle }) {
+export default function BreadcrumbComp({ }) {
 
     return (
         <div className="flex flex-row justify-between mb-5 items-center">
-            <h2 className="text-4xl font-semibold">{pageTitle}</h2>
+            <h2 className="text-4xl font-semibold">Create Airline</h2>
             <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>
@@ -48,13 +48,13 @@ export default function BreadcrumbComp({ tripTitle, pageTitle }) {
                 </BreadcrumbItem> */}
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbLink href="/trips">Trips</BreadcrumbLink>
+                        <BreadcrumbLink href="/airlines">Airline</BreadcrumbLink>
 
 
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbPage>{tripTitle}</BreadcrumbPage>
+                        <BreadcrumbPage>Create Airline</BreadcrumbPage>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>

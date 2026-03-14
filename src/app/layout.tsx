@@ -7,7 +7,8 @@ import { cn } from "@/lib/utils";
 // src/app/layout.tsx or wherever Flatpickr is used
 import 'flatpickr/dist/flatpickr.css';
 import { Toaster } from 'sonner';
-
+import { createClient } from '@/utils/supabase/server'
+import { cookies } from 'next/headers'
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 
