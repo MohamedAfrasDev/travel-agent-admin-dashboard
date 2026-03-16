@@ -34,6 +34,7 @@ import { UploadIcon } from "lucide-react";
 import Image from "next/image";
 import ExcelIcon from "../../../../../../../../public/images/icons/sheets.png";
 import { ButtonGroup } from "@/components/ui/button-group";
+import { ViewIDCardDialog } from "./ViewIDCardDialog";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -55,6 +56,7 @@ export function DataTable<TData, TValue>({
         pageSize: 5,
     })
 
+    const [selectedTraveller, setSelectedTraveller] = React.useState<TData | null>(null);
     const router = useRouter();
     const table = useReactTable({
         data,
@@ -273,12 +275,26 @@ export function DataTable<TData, TValue>({
                                                             <Field>
                                                                 <FieldLabel htmlFor="traveller-id-card">ID Card</FieldLabel>
                                                                 <ButtonGroup>
-                                                                    <Button variant="outline" className="h-10">Download ID Card</Button>
-                                                                    <Button variant="default" onClick={() => {
-                                                                        router.push(`/trips/${row.original.id}/${row.original.travellerId}`);
-                                                                    }} className="h-10">View ID Card</Button>
-
-                                                                </ButtonGroup>
+                                                                    <Input disabled value={"Card Generated"} />
+                                                                    <Button
+                                                                        className="h-10"
+                                                                        variant="outline"
+                                                                        onClick={(e) => {
+                                                                            e.stopPropagation();
+                                                                            setSelectedTraveller(row.original);
+                                                                        }}
+                                                                    >
+                                                                        View ID Card
+                                                                    </Button>                                                                </ButtonGroup>
+                                                                {selectedTraveller && (
+                                                                    <ViewIDCardDialog
+                                                                        traveller={selectedTraveller}
+                                                                        open={!!selectedTraveller}
+                                                                        onOpenChange={(open) => {
+                                                                            if (!open) setSelectedTraveller(null);
+                                                                        }}
+                                                                    />
+                                                                )}
 
                                                             </Field>
                                                             <Field>

@@ -3,7 +3,6 @@ import ComponentCard from '@/components/common/ComponentCard'
 import React from 'react'
 import { TripTraveller, columns } from './columns';
 import { DataTable } from './data-table';
-import { AddTravellerDialog } from './AddTravellerDialog';
 interface TravellerDetailProps {
     travellers: TripTraveller[];
 }
