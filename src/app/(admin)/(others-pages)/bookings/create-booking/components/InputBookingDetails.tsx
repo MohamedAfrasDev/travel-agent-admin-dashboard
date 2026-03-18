@@ -5,7 +5,13 @@ import { Field, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { motion } from 'framer-motion'
 
-const InputBookingDetails = ({ setNoOfTravellers }: { setNoOfTravellers: (noOfTravellers: number) => void }) => {
+interface InputBookingDetailsProps {
+    setNoOfTravellers: (noOfTravellers: number) => void;
+    handleSelectTrip: (tripName: string) => void;
+    tripName: string;
+}
+
+const InputBookingDetails = ({ setNoOfTravellers, handleSelectTrip, tripName }: InputBookingDetailsProps) => {
     const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
         const inputElement = event.target as HTMLInputElement;
         // Limit the value to 5 characters
@@ -20,7 +26,7 @@ const InputBookingDetails = ({ setNoOfTravellers }: { setNoOfTravellers: (noOfTr
                 Booking Details
             </h2>
             <div className='grid grid-cols-1 md:grid-cols-3 justify-between items-center gap-5'>
-                <SelectTripDropdown />
+                <SelectTripDropdown handleSelectTrip={handleSelectTrip} tripName={tripName} />
 
                 <Field className='w-full'>
                     <FieldLabel htmlFor='booking-id'>Booking ID</FieldLabel>

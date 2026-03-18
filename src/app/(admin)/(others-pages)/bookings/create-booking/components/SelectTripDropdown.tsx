@@ -4,13 +4,15 @@ import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import React from 'react'
 
-const SelectTripDropdown = () => {
+interface SelectTripDropdownProps {
+    handleSelectTrip: (tripName: string) => void;
+    tripName: string;
+}
 
-    const [tripName, setTripName] = React.useState<string>("");
+const SelectTripDropdown = ({ handleSelectTrip, tripName }: SelectTripDropdownProps) => {
 
-    const handleSelectTrip = (tripName: string) => {
-        setTripName(tripName);
-    }
+
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger onClick={(e) => e.stopPropagation()}

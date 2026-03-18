@@ -35,7 +35,7 @@ export function ViewIDCardDialog({ traveller, open, onOpenChange }: ViewIDCardDi
                     <div className="flex flex-col gap-4">
                         <h2>Front Side</h2>
                         <Card className="bg-white">
-
+                            <h2>{traveller.name}</h2>
                         </Card>
                     </div>
                     <div className="flex flex-col gap-4">

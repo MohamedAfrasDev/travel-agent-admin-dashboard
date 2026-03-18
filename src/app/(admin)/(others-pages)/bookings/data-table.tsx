@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/table"
 import React from "react"
 import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -73,7 +74,7 @@ export function DataTable<TData, TValue>({
                     className="max-w-md"
                 />
 
-                <a href="/bookings/create-booking" className="">Create Booking</a>
+                <Button onClick={() => router.push("/bookings/create-booking")} variant="outline" className="h-10">Create Booking</Button>
             </div>
 
             {/* SCROLL CONTAINER */}

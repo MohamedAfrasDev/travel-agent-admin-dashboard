@@ -1,171 +1,262 @@
+"use client";
 
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
-import { ButtonGroup } from "@/components/ui/button-group"
-import { Card } from '@/components/ui/card'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Field, FieldLabel } from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
-import { motion, AnimatePresence } from 'framer-motion'
-import Image from "next/image"
-import React from 'react'
-import SriLankanAirlines from "../../../../../../../public/images/logo/srilankan-airlines-logo.png";
-import AirArabia from "../../../../../../../public/images/logo/air-arabia.png";
-import KuwaitAirways from "../../../../../../../public/images/logo/kuwait-airways-logo.png";
-import Emirates from "../../../../../../../public/images/logo/emirates-logo.png";
-
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Card } from "@/components/ui/card";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import React from "react";
 import { AirlineList } from "../../../../../constant/Airlinelist";
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/ui/input-group";
+import { InfoIcon } from "lucide-react";
 
-const InputTravellersDetails = ({ noOfTravellers }: { noOfTravellers: number }) => {
-    const airlineList = new AirlineList();
+interface InputTravellersDetailsProps {
+    noOfTravellers: number;
+    isShowTravellersDetails: boolean;
+}
 
-    const [selectedAirline, setSelectedAirline] = React.useState<string>("");
+const InputTravellersDetails = ({
+    noOfTravellers,
+    isShowTravellersDetails,
+}: InputTravellersDetailsProps) => {
 
-    const handleSelectAirline = (airlineName: string) => {
-        setSelectedAirline(airlineName);
-    }
+    // ✅ ONE STATE PER TRAVELLER (BEST APPROACH)
+    const [travellers, setTravellers] = React.useState(
+        Array.from({ length: noOfTravellers }, () => ({
+            name: "",
+            email: "",
+            phone: "",
+            passport: "",
+            photo: "",
+            airline: "",
+            type: "Adult",
+        }))
+    );
 
-    const [selectedTravellerType, setSelectedTravellerType] = React.useState<string>("Adult");
+    // ✅ Sync when count changes
+    React.useEffect(() => {
+        setTravellers((prev) => {
+            const newTravellers = [...prev];
 
-    const handleSelectTravellerType = (travellerType: string) => {
-        setSelectedTravellerType(travellerType);
-    }
+            if (noOfTravellers > prev.length) {
+                // ➕ Add new travellers
+                for (let i = prev.length; i < noOfTravellers; i++) {
+                    newTravellers.push({
+                        name: "",
+                        email: "",
+                        phone: "",
+                        passport: "",
+                        photo: "",
+                        airline: "",
+                        type: "Adult",
+                    });
+                }
+            } else if (noOfTravellers < prev.length) {
+                // ➖ Remove extra travellers (but keep existing data)
+                return newTravellers.slice(0, noOfTravellers);
+            }
 
-    const price_list = [
-        { "1": "LKR 325,500" },
-        { "2": "LKR 265,500" },
-        { "3": "LKR 155,500" },
-        { "4": "LKR 255,500" },
-        { "5": "LKR 425,500" },
-        { "6": "LKR 125,500" },
-        { "7": "LKR 385,500" },
-        { "8": "LKR 215,500" },
-        { "9": "LKR 315,500" },
-        { "10": "LKR 195,500" }]
+            return newTravellers;
+        });
+    }, [noOfTravellers]);
+
+    // ✅ Update helper
+    const updateTraveller = (
+        index: number,
+        field: "airline" | "type" | "name" | "email" | "phone" | "passport" | "photo",
+        value: string
+    ) => {
+        setTravellers((prev) => {
+            const updated = [...prev];
+            updated[index] = { ...updated[index], [field]: value };
+            return updated;
+        });
+    };
 
     return (
         <Card className="dark:bg-white/3 px-5 py-3">
             <h2 className="text-lg">Travellers Details</h2>
 
-            <AnimatePresence>
-                {Array.from({ length: noOfTravellers }).map((_, index) => (
+            {isShowTravellersDetails ? (
+                <p className="text-center text-lg">
+                    Complete the above step to continue
+                </p>
+            ) : (
+                <AnimatePresence>
                     <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 40 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 40 }}
-                        transition={{ duration: 0.3 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                     >
-                        <Accordion type="multiple" defaultValue={Array.from({ length: noOfTravellers }, (_, i) => `item-${i + 1}`)}>
-                            <AccordionItem value={`item-${index + 1}`}>
-                                <AccordionTrigger>  <h3 className="text-xl">
-                                    Traveller #{index + 1}
-                                </h3></AccordionTrigger>
-                                <AccordionContent >
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
-                                        <Field>
-                                            <FieldLabel htmlFor={`traveller-name-${index}`}>
-                                                Name
-                                            </FieldLabel>
-                                            <Input id={`traveller-name-${index}`} placeholder="Enter Traveller Name" />
-                                        </Field>
+                        {/* ✅ SINGLE ACCORDION */}
+                        <Accordion
+                            type="multiple"
+                            defaultValue={Array.from(
+                                { length: noOfTravellers },
+                                (_, i) => `item-${i + 1}`
+                            )}
+                        >
+                            {travellers.map((traveller, index) => (
+                                <AccordionItem
+                                    key={index}
+                                    value={`item-${index + 1}`}
+                                >
+                                    <AccordionTrigger>
+                                        <h3 className="text-xl">
+                                            Traveller {traveller.name ? (`| ${traveller.name}`) : (`#${index + 1}`)}
+                                        </h3>
+                                    </AccordionTrigger>
 
-                                        <Field>
-                                            <FieldLabel htmlFor={`traveller-email-${index}`}>
-                                                Email
-                                            </FieldLabel>
-                                            <Input id={`traveller-email-${index}`} placeholder="Enter Traveller Email" />
-                                        </Field>
+                                    <AccordionContent>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
 
-                                        <Field>
-                                            <FieldLabel htmlFor={`traveller-phone-${index}`}>
-                                                Phone
-                                            </FieldLabel>
-                                            <Input id={`traveller-phone-${index}`} placeholder="Enter Traveller Phone" />
-                                        </Field>
+                                            {/* NAME */}
+                                            <Field>
+                                                <FieldLabel>Name</FieldLabel>
+                                                <Input placeholder="Enter Traveller Name" onChange={(e) => {
+                                                    updateTraveller(index, "name", e.target.value)
+                                                }} value={traveller.name} />
+                                            </Field>
 
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger onClick={(e) => e.stopPropagation()}
-                                                className="ml-auto w-full"
+                                            {/* EMAIL */}
+                                            <Field>
+                                                <FieldLabel>Email</FieldLabel>
+                                                <Input placeholder="Enter Traveller Email" value={traveller.email} onChange={(e) => {
+                                                    updateTraveller(index, "email", e.target.value)
+                                                }} />
+                                            </Field>
 
-                                            >
+                                            {/* PHONE */}
+                                            <Field>
+                                                <FieldLabel>Phone</FieldLabel>
+                                                <InputGroup className="h-10">
+                                                    <InputGroupInput id="input-group-url" placeholder="Enter your phone number" value={traveller.phone} onChange={(e) => {
+                                                        updateTraveller(index, "phone", e.target.value)
 
-                                                <Field>
-                                                    <FieldLabel htmlFor='trip-name'>Type</FieldLabel>
-                                                    <Input id='trip-name' placeholder='Select Traveller Type' value="Adult" disabled />
-                                                </Field>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent>
-                                                <DropdownMenuGroup>
-                                                    <DropdownMenuItem onClick={(e) => {
-                                                        e.stopPropagation();
-                                                    }}>Adult</DropdownMenuItem>
-                                                    <DropdownMenuItem onClick={(e) => {
-                                                        e.stopPropagation();
-                                                    }}>Child</DropdownMenuItem>
-                                                    <DropdownMenuItem onClick={(e) => {
-                                                        e.stopPropagation();
-                                                    }}>Infant</DropdownMenuItem>
-                                                </DropdownMenuGroup>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
+                                                    }} type="number" />
+                                                    <InputGroupAddon>
+                                                        <InputGroupText>+94</InputGroupText>
+                                                    </InputGroupAddon>
 
-                                        <Field>
-                                            <FieldLabel htmlFor={`traveller-passport-${index}`}>
-                                                Passport
-                                            </FieldLabel>
-                                            <ButtonGroup>
-                                                <Input disabled id={`traveller-passport-${index}`} placeholder={`Upload Passport Traveller ${index + 1}`} />
+                                                </InputGroup>
+                                            </Field>
 
-                                                <Button className="h-10" variant="outline">
-                                                    Upload
-                                                </Button>
-                                            </ButtonGroup>
-                                        </Field>
+                                            {/* TYPE */}
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="w-full"
+                                                >
+                                                    <Field>
+                                                        <FieldLabel>Type</FieldLabel>
+                                                        <Input
+                                                            value={traveller.type}
+                                                            disabled
+                                                        />
+                                                    </Field>
+                                                </DropdownMenuTrigger>
 
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger onClick={(e) => e.stopPropagation()}
-                                                className="ml-auto w-full"
+                                                <DropdownMenuContent>
+                                                    <DropdownMenuGroup>
+                                                        {["Adult", "Child", "Infant"].map((type) => (
+                                                            <DropdownMenuItem
+                                                                key={type}
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    updateTraveller(index, "type", type);
+                                                                }}
+                                                            >
+                                                                {type}
+                                                            </DropdownMenuItem>
+                                                        ))}
+                                                    </DropdownMenuGroup>
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
 
-                                            >
+                                            {/* PASSPORT */}
+                                            <Field>
+                                                <FieldLabel>Passport</FieldLabel>
+                                                <ButtonGroup>
+                                                    <Input
+                                                        disabled
+                                                        placeholder={`Upload Passport Traveller ${index + 1}`}
+                                                    />
+                                                    <Button variant="outline" className="h-10">
+                                                        Upload
+                                                    </Button>
+                                                </ButtonGroup>
+                                            </Field>
 
-                                                <Field>
-                                                    <FieldLabel htmlFor='trip-name'>Airline</FieldLabel>
-                                                    <Input id='trip-name' placeholder='Select Airline' value={selectedAirline + " " + price_list[index][(index + 1).toString()]} disabled />
-                                                </Field>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent>
-                                                <DropdownMenuGroup>
+                                            {/* AIRLINE */}
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="w-full"
+                                                >
+                                                    <Field>
+                                                        <FieldLabel>Airline</FieldLabel>
+                                                        <Input
+                                                            value={
+                                                                traveller.airline || "Select Airline"
+                                                            }
+                                                            disabled
+                                                        />
+                                                    </Field>
+                                                </DropdownMenuTrigger>
 
-                                                    {AirlineList.airLineList.map((airline, index) => (
-                                                        <DropdownMenuItem className="py-3" key={airline.name} onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            handleSelectAirline(airline.name);
-                                                        }}><Image src={airline.image} alt="" width={35} height={35} /> {airline.name} {price_list[index][(index + 1).toString()]}</DropdownMenuItem>
-                                                    ))}
+                                                <DropdownMenuContent>
+                                                    <DropdownMenuGroup>
+                                                        {AirlineList.airLineList.map((airline) => (
+                                                            <DropdownMenuItem
+                                                                key={airline.name}
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    updateTraveller(
+                                                                        index,
+                                                                        "airline",
+                                                                        airline.name
+                                                                    );
+                                                                }}
+                                                                className="flex items-center gap-2 py-2"
+                                                            >
+                                                                <Image
+                                                                    src={airline.image}
+                                                                    alt=""
+                                                                    width={30}
+                                                                    height={30}
+                                                                />
+                                                                {airline.name}
+                                                            </DropdownMenuItem>
+                                                        ))}
+                                                    </DropdownMenuGroup>
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
 
-                                                </DropdownMenuGroup>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem>
+                                        </div>
+                                    </AccordionContent>
+                                </AccordionItem>
+                            ))}
                         </Accordion>
-
-
-
                     </motion.div>
-                ))}
-            </AnimatePresence>
-
+                </AnimatePresence>
+            )}
         </Card>
-    )
-}
+    );
+};
 
-export default InputTravellersDetails
+export default InputTravellersDetails;
