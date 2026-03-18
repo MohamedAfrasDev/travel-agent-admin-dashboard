@@ -49,6 +49,8 @@ const InputTravellersDetails = ({
             photo: "",
             airline: "",
             type: "Adult",
+            note: "",
+            passportNumber: "",
         }))
     );
 
@@ -68,6 +70,8 @@ const InputTravellersDetails = ({
                         photo: "",
                         airline: "",
                         type: "Adult",
+                        note: "",
+                        passportNumber: "",
                     });
                 }
             } else if (noOfTravellers < prev.length) {
@@ -82,8 +86,8 @@ const InputTravellersDetails = ({
     // ✅ Update helper
     const updateTraveller = (
         index: number,
-        field: "airline" | "type" | "name" | "email" | "phone" | "passport" | "photo",
-        value: string
+        field: "airline" | "type" | "name" | "email" | "phone" | "passport" | "photo" | "note" | "passportNumber",
+        value: undefined
     ) => {
         setTravellers((prev) => {
             const updated = [...prev];
@@ -93,10 +97,9 @@ const InputTravellersDetails = ({
     };
     const [refreshTrigger, setRefreshTrigger] = useState<number>(0)
     const [file, setFile] = useState<File | null>(null)
-    const [preview, setPreview] = useState<string | null>(null)
-    const handleChange = (uploadedFile: File) => {
+    const handleChange = (uploadedFile: File, index: number) => {
         setFile(uploadedFile)
-        setPreview(URL.createObjectURL(uploadedFile))
+        updateTraveller(index, "photo", URL.createObjectURL(uploadedFile))
         //  uploadFileToStorage(uploadedFile) // pass directly
     }
     return (
@@ -222,12 +225,24 @@ const InputTravellersDetails = ({
                                                     >
                                                         <Field>
                                                             <FieldLabel>Airline</FieldLabel>
-                                                            <Input
-                                                                value={
-                                                                    traveller.airline || "Select Airline"
-                                                                }
-                                                                disabled
-                                                            />
+                                                            <ButtonGroup>
+                                                                {traveller.airline && (
+                                                                    <Button variant="outline" className="h-10">
+                                                                        <Image
+                                                                            src={traveller.airline.image}
+                                                                            alt=""
+                                                                            width={40}
+                                                                            height={40}
+                                                                        />
+                                                                    </Button>
+                                                                )}
+                                                                <Input
+                                                                    value={
+                                                                        traveller.airline.name || "Select Airline"
+                                                                    }
+                                                                    disabled
+                                                                />
+                                                            </ButtonGroup>
                                                         </Field>
                                                     </DropdownMenuTrigger>
 
@@ -241,7 +256,7 @@ const InputTravellersDetails = ({
                                                                         updateTraveller(
                                                                             index,
                                                                             "airline",
-                                                                            airline.name
+                                                                            airline
                                                                         );
                                                                     }}
                                                                     className="flex items-center gap-2 py-2"
@@ -262,30 +277,48 @@ const InputTravellersDetails = ({
                                             </div>
                                             <div className="flex md:flex-row flex-col mt-5 gap-5">
                                                 <FileUploader
-                                                    handleChange={handleChange}
+                                                    handleChange={(file) => handleChange(file, index)}
                                                     name="file"
                                                     types={fileTypes}
                                                 >
-                                                    <Card className="dark:bg-white/3 p-5">
+                                                    <FieldLabel htmlFor="passport-photo">Passport Photo</FieldLabel>
+
+                                                    <Card className="dark:bg-white/3 p-5 mt-2 rounded-sm ml-2">
                                                         <div className="flex flex-col items-center justify-center gap-2">
-                                                            <p className="text-sm font-medium">Upload Photo</p>
-                                                            <p className="text-xs text-muted-foreground">Click or drag file here to upload</p>
+                                                            {traveller.photo ? <Image src={traveller.photo} alt="preview" width={120} height={120} /> : <p className="text-sm font-medium">Upload Photo</p>}
+                                                            {!traveller.photo && <p className="text-xs text-muted-foreground text-center">Click or drag file here to upload</p>}
                                                         </div>
                                                     </Card>
 
                                                 </FileUploader>
+                                                <div className="flex flex-col gap-5 w-full">
 
-                                                <Field>
-                                                    <FieldLabel htmlFor="block-end-textarea">Textarea</FieldLabel>
-                                                    <InputGroup>
-                                                        <InputGroupTextarea
-                                                            id="block-end-textarea"
-                                                            placeholder="Write a comment..."
-                                                        />
+                                                    <Field>
+                                                        <FieldLabel htmlFor="passport-number">Passport Number</FieldLabel>
 
-                                                    </InputGroup>
+                                                        <Input type="text" id="passport-number" placeholder="Enter Passport Number" value={traveller.passportNumber} onChange={(e) => {
+                                                            updateTraveller(
+                                                                index,
+                                                                "passportNumber",
+                                                                e.target.value
+                                                            );
+                                                        }} />
 
-                                                </Field>
+                                                    </Field>
+                                                    <Field>
+                                                        <FieldLabel htmlFor="special-note">Special Note</FieldLabel>
+
+                                                        <Input type="text" id="special-note" placeholder="Enter Special Note" value={traveller.note} onChange={(e) => {
+                                                            updateTraveller(
+                                                                index,
+                                                                "note",
+                                                                e.target.value
+                                                            );
+                                                        }} />
+
+                                                    </Field>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </AccordionContent>

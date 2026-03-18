@@ -8,6 +8,8 @@ import { Field, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import InputBookingDetails from './components/InputBookingDetails'
 import InputTravellersDetails from './components/InputTravellersDetails'
+import BookingPaymentDetails from './components/BookingPaymentDetails';
+import HotelBookingDetails from './components/HotelBookingDetails';
 
 const CreateBooking = () => {
     const [noOfTravellers, setNoOfTravellers] = React.useState<number>(0);
@@ -26,6 +28,10 @@ const CreateBooking = () => {
             <InputBookingDetails setNoOfTravellers={setNoOfTravellers} handleSelectTrip={handleSelectTrip} tripName={tripName} />
 
             <InputTravellersDetails noOfTravellers={noOfTravellers} isShowTravellersDetails={(noOfTravellers !== 0 && tripName !== "") ? false : true} />
+
+
+            <HotelBookingDetails />
+            <BookingPaymentDetails />
         </div>
     )
 }
