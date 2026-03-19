@@ -63,6 +63,7 @@ const InputTravellersDetails = ({
                         type: "Adult",
                         note: "",
                         passportNumber: "",
+                        cost: ""
                     });
                 }
             } else if (noOfTravellers < prev.length) {

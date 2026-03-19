@@ -29,6 +29,7 @@ const CreateBooking = () => {
             type: "Adult",
             note: "",
             passportNumber: "",
+            cost: ""
         }))
     );
     return (

@@ -64,18 +64,6 @@ export function DataTable<TData, TValue>({
     return (
         <div className="rounded-xl border border-gray-200 bg-white dark:border-white/5 dark:bg-white/3">
 
-            <div className="flex items-center py-4 justify-between px-5">
-                <Input
-                    placeholder="Filter name..."
-                    value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("name")?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-md"
-                />
-
-                <Button onClick={() => router.push("/bookings/create-booking")} variant="outline" className="h-10">Create Booking</Button>
-            </div>
 
             {/* SCROLL CONTAINER */}
             <div className="max-h-[500px] overflow-y-auto custom-scrollbar">
@@ -104,20 +92,23 @@ export function DataTable<TData, TValue>({
                     <TableBody className="divide-y divide-gray-100 dark:divide-white/5">
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
-                                <TableRow key={row.id} onClick={() => {
-                                    router.push(`/bookings/${row.original.id}`);
-                                }}>
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell
-                                            key={cell.id}
-                                            className="px-5 py-4 sm:px-6 text-start"
-                                        >
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
-                                        </TableCell>
-                                    ))}
+                                <TableRow key={row.id} >
+                                    {row.id && row.original.name && row.original.email && row.original.phone &&
+                                        row.original.type && row.original.passportNumber && row.original.airline && row.original.photo && (
+                                            <div>
+                                                {row.getVisibleCells().map((cell) => (
+                                                    <TableCell
+                                                        key={cell.id}
+                                                        className="px-5 py-4 sm:px-6 text-center"
+                                                    >
+                                                        {flexRender(
+                                                            cell.column.columnDef.cell,
+                                                            cell.getContext()
+                                                        )}
+                                                    </TableCell>
+                                                ))}
+                                            </div>
+                                        )}
                                 </TableRow>
                             ))
                         ) : (
