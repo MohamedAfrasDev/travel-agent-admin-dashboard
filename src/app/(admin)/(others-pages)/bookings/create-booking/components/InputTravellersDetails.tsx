@@ -32,27 +32,18 @@ const fileTypes = ["JPG", "PNG", "GIF"];
 interface InputTravellersDetailsProps {
     noOfTravellers: number;
     isShowTravellersDetails: boolean;
+    setTravellers: React.Dispatch<React.SetStateAction<any[]>>;
+    travellers: any[];
 }
 
 const InputTravellersDetails = ({
     noOfTravellers,
     isShowTravellersDetails,
+    setTravellers,
+    travellers
 }: InputTravellersDetailsProps) => {
 
-    // ✅ ONE STATE PER TRAVELLER (BEST APPROACH)
-    const [travellers, setTravellers] = React.useState(
-        Array.from({ length: noOfTravellers }, () => ({
-            name: "",
-            email: "",
-            phone: "",
-            passport: "",
-            photo: "",
-            airline: "",
-            type: "Adult",
-            note: "",
-            passportNumber: "",
-        }))
-    );
+
 
     // ✅ Sync when count changes
     React.useEffect(() => {

@@ -9,7 +9,6 @@ import { Input } from '@/components/ui/input'
 import InputBookingDetails from './components/InputBookingDetails'
 import InputTravellersDetails from './components/InputTravellersDetails'
 import BookingPaymentDetails from './components/BookingPaymentDetails';
-import HotelBookingDetails from './components/HotelBookingDetails';
 
 const CreateBooking = () => {
     const [noOfTravellers, setNoOfTravellers] = React.useState<number>(0);
@@ -19,7 +18,19 @@ const CreateBooking = () => {
     const handleSelectTrip = (tripName: string) => {
         setTripName(tripName);
     }
-
+    const [travellers, setTravellers] = React.useState(
+        Array.from({ length: noOfTravellers }, () => ({
+            name: "",
+            email: "",
+            phone: "",
+            passport: "",
+            photo: "",
+            airline: "",
+            type: "Adult",
+            note: "",
+            passportNumber: "",
+        }))
+    );
     return (
         <div className='gap-5 flex flex-col'>
             <BreadcrumbComp pageTitle={'Create new Booking'} />
@@ -27,11 +38,13 @@ const CreateBooking = () => {
 
             <InputBookingDetails setNoOfTravellers={setNoOfTravellers} handleSelectTrip={handleSelectTrip} tripName={tripName} />
 
-            <InputTravellersDetails noOfTravellers={noOfTravellers} isShowTravellersDetails={(noOfTravellers !== 0 && tripName !== "") ? false : true} />
+            <InputTravellersDetails
+                noOfTravellers={noOfTravellers}
+                travellers={travellers}
+                isShowTravellersDetails={(noOfTravellers !== 0 && tripName !== "") ? false : true} setTravellers={setTravellers} />
 
 
-            <HotelBookingDetails />
-            <BookingPaymentDetails />
+            <BookingPaymentDetails noOfTravellers={noOfTravellers} setTravellers={setTravellers} travellers={travellers} />
         </div>
     )
 }
